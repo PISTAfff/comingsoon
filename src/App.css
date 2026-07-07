@@ -228,6 +228,7 @@
    marquee
 ---------------------------------------------------------------------- */
 .marquee {
+  display: flex;
   margin-top: clamp(20px, 4vh, 40px);
   padding: 14px 0;
   border-top: 1px solid var(--line);
@@ -249,14 +250,17 @@
   );
 }
 
-.marquee-track {
-  display: inline-flex;
+/* Two identical copies sit side by side, each at least full-width, and both
+   translate by exactly their own width (-100%). One copy always slides into
+   the space the other leaves, so the loop is seamless at any screen size. */
+.marquee-copy {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  min-width: 100%;
   white-space: nowrap;
-  animation: slide 30s linear infinite;
-}
-
-.marquee-group {
-  display: inline-flex;
+  animation: marquee-scroll 90s linear infinite;
 }
 
 .marquee-item {
@@ -344,12 +348,12 @@
   }
 }
 
-@keyframes slide {
+@keyframes marquee-scroll {
   from {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(-100%);
   }
 }
 

@@ -8,6 +8,9 @@ const LOGOS = [
 ]
 
 const MARQUEE = ['Coming soon', 'Stay tuned', 'REACTEG', 'Something new']
+// Repeat the phrases so a single copy overflows even wide screens; two identical
+// copies then scroll as one continuous, seamless loop.
+const MARQUEE_SEQUENCE = Array.from({ length: 4 }).flatMap(() => MARQUEE)
 
 export default function App() {
   return (
@@ -65,18 +68,16 @@ export default function App() {
       </main>
 
       <div className="marquee" aria-hidden="true">
-        <div className="marquee-track">
-          {[0, 1].map((group) => (
-            <span className="marquee-group" key={group}>
-              {MARQUEE.map((word, j) => (
-                <span className="marquee-item" key={j}>
-                  {word}
-                  <span className="marquee-dot">◆</span>
-                </span>
-              ))}
-            </span>
-          ))}
-        </div>
+        {[0, 1].map((copy) => (
+          <div className="marquee-copy" key={copy}>
+            {MARQUEE_SEQUENCE.map((word, j) => (
+              <span className="marquee-item" key={j}>
+                {word}
+                <span className="marquee-dot">◆</span>
+              </span>
+            ))}
+          </div>
+        ))}
       </div>
 
       <footer className="footer">
