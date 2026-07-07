@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './App.css'
 
 // The three brand logos shown as the centre triptych.
@@ -11,16 +10,6 @@ const LOGOS = [
 const MARQUEE = ['Coming soon', 'Stay tuned', 'REACTEG', 'Something new']
 
 export default function App() {
-  const [email, setEmail] = useState('')
-  const [joined, setJoined] = useState(false)
-
-  function handleSubmit(event) {
-    event.preventDefault()
-    if (!email.trim()) return
-    // Front-end only for now: nothing is stored or sent anywhere yet.
-    setJoined(true)
-  }
-
   return (
     <div className="page">
       <div className="grain" aria-hidden="true" />
@@ -71,42 +60,8 @@ export default function App() {
 
         <p className="tagline">
           We&rsquo;re building something considered. Quiet, deliberate, and worth
-          the wait. Leave your email and we&rsquo;ll tell you the moment it&rsquo;s
-          live.
+          the wait.
         </p>
-
-        {joined ? (
-          <p className="notify-done" role="status">
-            <span className="notify-check" aria-hidden="true">
-              ✓
-            </span>
-            You&rsquo;re on the list. Talk soon.
-          </p>
-        ) : (
-          <form className="notify" onSubmit={handleSubmit}>
-            <input
-              type="email"
-              inputMode="email"
-              placeholder="your@email.com"
-              aria-label="Email address"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              required
-            />
-            <button type="submit">
-              <span>Notify me</span>
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path
-                  d="M4 12h15M13 6l6 6-6 6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-          </form>
-        )}
       </main>
 
       <div className="marquee" aria-hidden="true">

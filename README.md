@@ -32,14 +32,6 @@ The three centre cards show brand logos (VIP, React, Sonoff Egypt) from
 To change a logo, drop a new file into `public/images` and update its path in
 the `LOGOS` array. The logos are display-only (not links).
 
-## Email capture
-
-The "Notify me" form is **front-end only**. On submit it just shows a local
-thank-you message. Nothing is stored, and no email is sent anywhere. To actually
-collect addresses, wire the form to a service (for example Formspree, a Vercel
-serverless function writing to a database or KV store, Resend, or a newsletter
-provider such as Mailchimp / ConvertKit).
-
 ## Notes
 
 - Fonts load from Google Fonts. All motion respects `prefers-reduced-motion`.

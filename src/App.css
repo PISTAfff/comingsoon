@@ -213,7 +213,7 @@
 }
 
 /* ----------------------------------------------------------------------
-   tagline + notify
+   tagline
 ---------------------------------------------------------------------- */
 .tagline {
   max-width: 500px;
@@ -222,81 +222,6 @@
   color: var(--ink-soft);
   animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
   animation-delay: 0.9s;
-}
-
-.notify {
-  display: flex;
-  align-items: center;
-  width: min(430px, 100%);
-  border: 1px solid var(--ink);
-  background: rgba(255, 255, 255, 0.34);
-  padding: 5px 5px 5px 4px;
-  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
-  animation-delay: 1.02s;
-}
-
-.notify input {
-  flex: 1;
-  min-width: 0;
-  border: none;
-  outline: none;
-  background: transparent;
-  font-family: 'Space Mono', monospace;
-  font-size: 14px;
-  color: var(--ink);
-  padding: 12px 14px;
-}
-
-.notify input::placeholder {
-  color: var(--muted);
-}
-
-.notify button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: none;
-  cursor: pointer;
-  background: var(--accent);
-  color: #fff;
-  font-family: 'Space Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 12px 16px;
-  white-space: nowrap;
-  transition: background 0.3s, gap 0.3s;
-}
-
-.notify button:hover {
-  background: var(--accent-ink);
-  gap: 12px;
-}
-
-.notify button svg {
-  width: 14px;
-  height: 14px;
-}
-
-.notify-done {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: 'Space Mono', monospace;
-  font-size: 14px;
-  color: var(--ink);
-  animation: rise 0.6s ease backwards;
-}
-
-.notify-check {
-  display: inline-grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: #fff;
-  font-size: 12px;
 }
 
 /* ----------------------------------------------------------------------
@@ -456,12 +381,6 @@
   }
   .title {
     font-size: clamp(52px, 22vw, 96px);
-  }
-  .notify button span {
-    display: none;
-  }
-  .notify button {
-    padding: 12px 14px;
   }
 }
 
