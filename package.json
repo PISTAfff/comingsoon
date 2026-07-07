@@ -1,0 +1,20 @@
+{
+  "name": "comingsoon",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Pista's Spot — a minimal, bold coming-soon page built with React.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.3.5"
+  }
+}
