@@ -1,20 +1,12 @@
 import { useState } from 'react'
 import './App.css'
 
-// The three centrepieces. Swap `src` for real artwork and set `href` to the
-// destination each image should link to (links coming soon).
-const PREVIEWS = [
-  { src: '/images/placeholder-1.svg', no: '01', label: 'First look', href: '#' },
-  { src: '/images/placeholder-2.svg', no: '02', label: 'In the works', href: '#' },
-  { src: '/images/placeholder-3.svg', no: '03', label: 'Almost there', href: '#' },
+// The three brand logos shown as the centre triptych.
+const LOGOS = [
+  { src: '/images/vip.jpeg', name: 'VIP' },
+  { src: '/images/react.png', name: 'React' },
+  { src: '/images/sonoff.png', name: 'Sonoff Egypt' },
 ]
-
-// Seven small logo / link slots. Fill in `href` (and swap the glyph for a real
-// logo) once the list of links is ready.
-const LINKS = Array.from({ length: 7 }, (_, i) => ({
-  label: `Link ${i + 1}`,
-  href: '#',
-}))
 
 const MARQUEE = ['Coming soon', 'Stay tuned', 'REACTEG', 'Something new']
 
@@ -59,31 +51,21 @@ export default function App() {
           </span>
         </h1>
 
-        <section className="gallery" aria-label="A glimpse of what's coming">
-          {PREVIEWS.map((preview, i) => (
-            <a
+        <section className="gallery" aria-label="Our brands">
+          {LOGOS.map((logo, i) => (
+            <figure
               className="frame"
-              key={preview.no}
-              href={preview.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${preview.label} (preview ${preview.no})`}
+              key={logo.name}
               style={{
                 '--d': `${0.55 + i * 0.12}s`,
                 '--float-d': `${6 + i}s`,
                 '--float-delay': `${i * 0.7}s`,
               }}
             >
-              <span className="frame-no">{preview.no}</span>
               <span className="frame-media">
-                <img
-                  src={preview.src}
-                  alt={`Preview ${preview.no} placeholder`}
-                  loading="lazy"
-                />
+                <img src={logo.src} alt={`${logo.name} logo`} />
               </span>
-              <span className="frame-label">{preview.label}</span>
-            </a>
+            </figure>
           ))}
         </section>
 
@@ -125,21 +107,6 @@ export default function App() {
             </button>
           </form>
         )}
-
-        <nav className="badges" aria-label="Find us elsewhere">
-          {LINKS.map((link, i) => (
-            <a
-              className="badge"
-              key={i}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={link.label}
-            >
-              <span className="badge-glyph">{i + 1}</span>
-            </a>
-          ))}
-        </nav>
       </main>
 
       <div className="marquee" aria-hidden="true">

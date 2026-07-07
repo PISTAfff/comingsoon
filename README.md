@@ -23,15 +23,14 @@ npm run build      # outputs to /dist
 npm run preview    # serve the production build locally
 ```
 
-## Swap in the real images and links
+## The centre logos
 
-- **Images:** the three centre images are placeholders. Replace the files in
-  [`public/images`](public/images) (or add your own and update the `PREVIEWS`
-  array in [`src/App.jsx`](src/App.jsx)). A 4:5 portrait ratio keeps the triptych
-  balanced.
-- **Clicks:** each preview image and each of the seven small badges is a link.
-  Set the `href` values in the `PREVIEWS` and `LINKS` arrays in
-  [`src/App.jsx`](src/App.jsx) once the destinations are ready.
+The three centre cards show brand logos (VIP, React, Sonoff Egypt) from
+[`public/images`](public/images), driven by the `LOGOS` array in
+[`src/App.jsx`](src/App.jsx). Each is a clean white card with the logo centred
+(`object-fit: contain`) so mixed backgrounds (like VIP's white JPEG) blend in.
+To change a logo, drop a new file into `public/images` and update its path in
+the `LOGOS` array. The logos are display-only (not links).
 
 ## Email capture
 
