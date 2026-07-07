@@ -15,7 +15,6 @@ const MARQUEE_SEQUENCE = Array.from({ length: 4 }).flatMap(() => MARQUEE)
 export default function App() {
   return (
     <div className="page">
-      <div className="grain" aria-hidden="true" />
       <div className="glow" aria-hidden="true" />
 
       <header className="topbar">
@@ -73,7 +72,7 @@ export default function App() {
             {MARQUEE_SEQUENCE.map((word, j) => (
               <span className="marquee-item" key={j}>
                 {word}
-                <span className="marquee-dot">◆</span>
+                <span className="marquee-dot">/</span>
               </span>
             ))}
           </div>

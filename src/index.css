@@ -1,7 +1,7 @@
 :root {
-  /* palette: warm paper, ink, a single deep-cobalt accent */
-  --paper: #ece7dc;
-  --paper-2: #e3ddce;
+  /* palette: white, ink, a single deep-cobalt accent */
+  --paper: #ffffff;
+  --paper-2: #ffffff;
   --ink: #17150f;
   --ink-soft: #4d4839;
   --muted: #8b8271;
@@ -9,7 +9,7 @@
   --line-strong: rgba(23, 21, 15, 0.3);
   --accent: #2436d8;
   --accent-ink: #1a29b0;
-  --accent-soft: rgba(36, 54, 216, 0.1);
+  --accent-soft: rgba(36, 54, 216, 0.07);
 }
 
 *,
