@@ -31,7 +31,7 @@ export default function App() {
       <main className="hero">
         <p className="kicker">
           <span className="kicker-rule" aria-hidden="true" />
-          MMXXVI · Something is taking shape
+          Something is taking shape
           <span className="kicker-rule" aria-hidden="true" />
         </p>
 
@@ -80,7 +80,7 @@ export default function App() {
       </div>
 
       <footer className="footer">
-        <span>© MMXXVI REACTEG</span>
+        <span>REACTEG</span>
         <span className="footer-note">All rights reserved</span>
       </footer>
     </div>
