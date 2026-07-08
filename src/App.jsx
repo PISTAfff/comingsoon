@@ -19,8 +19,7 @@ export default function App() {
 
       <header className="topbar">
         <div className="brand">
-          <span className="brand-mark" aria-hidden="true" />
-          <span className="brand-name">REACTEG</span>
+          <img src="/images/react2.png" width="100" height="100" alt="React logo" className="brand-logo" />
         </div>
         <div className="status">
           <span className="status-dot" aria-hidden="true" />
@@ -80,7 +79,7 @@ export default function App() {
       </div>
 
       <footer className="footer">
-        <span>REACTEG</span>
+        <span>REACT</span>
         <span className="footer-note">All rights reserved</span>
       </footer>
     </div>

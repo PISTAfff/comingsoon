@@ -4,7 +4,7 @@
   flex-direction: column;
   min-height: 100vh;
   min-height: 100svh;
-  padding: clamp(18px, 3.5vw, 46px);
+  padding:  1vh 2vw;
   overflow: hidden;
   isolation: isolate;
 }
@@ -96,7 +96,7 @@
   justify-content: center;
   text-align: center;
   gap: clamp(26px, 4.4vh, 48px);
-  padding: clamp(24px, 5vh, 56px) 0;
+  padding:0;
 }
 
 .kicker {
@@ -120,7 +120,7 @@
 
 .title {
   font-weight: 700;
-  font-size: clamp(62px, 15.5vw, 232px);
+  font-size: clamp(31px, 7.5vw, 115px);
   line-height: 0.82;
   letter-spacing: -0.045em;
   text-transform: uppercase;
