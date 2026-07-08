@@ -31,7 +31,7 @@ export default function App() {
       <main className="hero">
         <p className="kicker">
           <span className="kicker-rule" aria-hidden="true" />
-          Est. MMXXVI · Something is taking shape
+          MMXXVI · Something is taking shape
           <span className="kicker-rule" aria-hidden="true" />
         </p>
 
