@@ -3,7 +3,7 @@ import './App.css'
 // The three brand logos shown as the centre triptych.
 const LOGOS = [
   { src: '/images/vip.jpeg', name: 'VIP' },
-  { src: '/images/react.png', name: 'React' },
+  { src: '/images/react2.png', name: 'React' },
   { src: '/images/sonoff.png', name: 'Sonoff Egypt' },
 ]
 
@@ -137,7 +137,7 @@ export default function App() {
       </div>
 
       <footer className="footer">
-        <span>© MMXXVI REACT</span>
+        <span>© REACT</span>
         <span className="footer-note">All rights reserved</span>
       </footer>
     </div>
