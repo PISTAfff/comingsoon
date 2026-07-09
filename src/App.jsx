@@ -3,7 +3,7 @@ import './App.css'
 // The three brand logos shown as the centre triptych.
 const LOGOS = [
   { src: '/images/vip.jpeg', name: 'VIP' },
-  { src: '/images/react2.png', name: 'React' },
+  { src: '/images/react.png', name: 'React' },
   { src: '/images/sonoff.png', name: 'Sonoff Egypt' },
 ]
 
@@ -70,8 +70,7 @@ export default function App() {
 
       <header className="topbar">
         <div className="brand">
-          <span className="brand-mark" aria-hidden="true" />
-          <span className="brand-name">REACT</span>
+          <img className="brand-logo" src="/images/react2.png" alt="React" />
         </div>
         <div className="status">
           <span className="status-dot" aria-hidden="true" />
