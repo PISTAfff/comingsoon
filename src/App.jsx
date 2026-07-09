@@ -7,7 +7,7 @@ const LOGOS = [
   { src: '/images/sonoff.png', name: 'Sonoff Egypt' },
 ]
 
-const MARQUEE = ['Under maintenance', 'Back shortly', 'REACTEG', 'Hang tight']
+const MARQUEE = ['Under maintenance', 'Back shortly', 'REACT', 'Hang tight']
 // Repeat the phrases so a single copy overflows even wide screens; two identical
 // copies then scroll as one continuous, seamless loop.
 const MARQUEE_SEQUENCE = Array.from({ length: 4 }).flatMap(() => MARQUEE)
@@ -71,7 +71,7 @@ export default function App() {
       <header className="topbar">
         <div className="brand">
           <span className="brand-mark" aria-hidden="true" />
-          <span className="brand-name">REACTEG</span>
+          <span className="brand-name">REACT</span>
         </div>
         <div className="status">
           <span className="status-dot" aria-hidden="true" />
@@ -137,7 +137,7 @@ export default function App() {
       </div>
 
       <footer className="footer">
-        <span>© MMXXVI REACTEG</span>
+        <span>© MMXXVI REACT</span>
         <span className="footer-note">All rights reserved</span>
       </footer>
     </div>

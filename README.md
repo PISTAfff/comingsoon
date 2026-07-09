@@ -1,4 +1,4 @@
-# REACTEG · Coming Soon
+# REACT · Under Maintenance
 
 A single-page, minimal **Coming Soon** site built with **React + Vite** (plain
 JS/JSX and CSS, no TypeScript, no UI framework).

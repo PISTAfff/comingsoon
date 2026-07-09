@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "REACTEG, a minimal, bold coming-soon page built with React.",
+  "description": "REACT, a minimal, bold under-maintenance page built with React.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
