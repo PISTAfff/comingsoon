@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Madkour AI · Autonomous Project Intelligence — PS-03 Substation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Madkour brand — sampled from official logo (#0032EB / #010A4F) and deck theme (#224A90 / #5A9BD5) */
+    --navy:#010A4F;
+    --brand:#2E4EFF;
+    --brand-deep:#0032EB;
+    --brand-mid:#3D63B0;
+    --sky:#5A9BD5;
+    --bg-0:#04061E;
+    --bg-1:#080B2E;
+    --bg-2:#0C1140;
+    --bg-3:#11175A;
+    --line:#2B3480;
+    --line-soft:#1B2160;
+    --text-hi:#EEF1FF;
+    --text-mid:#94A0D9;
+    --text-low:#5A62A0;
+    --amber:#E8A33D;
+    --amber-dim:#8A651B;
+    --cyan:#2E4EFF;
+    --green:#2FD07B;
+    --red:#F0475C;
+    --violet:#8B7CF6;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{background:var(--bg-0); color:var(--text-hi); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;}
+  body{
+    background-image:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(46,78,255,0.16), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 0%, rgba(90,155,213,0.10), transparent 55%),
+      linear-gradient(180deg, #04061E 0%, #05071F 100%);
+    min-height:100vh;
+    padding:28px 34px 60px;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .disp{font-family:'Rajdhani',sans-serif;}
+
+  /* ===== TOP BAR ===== */
+  .topbar{display:flex; align-items:center; justify-content:space-between; margin-bottom:26px; flex-wrap:wrap; gap:14px;}
+  .brand{display:flex; align-items:center; gap:14px;}
+  .brand-mark{
+    width:42px; height:42px; border-radius:10px;
+    background:linear-gradient(135deg, var(--brand-deep), var(--navy));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Rajdhani'; font-weight:700; font-size:19px; color:#FFFFFF;
+    box-shadow:0 0 0 1px rgba(46,78,255,0.4), 0 8px 22px -6px rgba(46,78,255,0.55);
+    flex-shrink:0;
+  }
+  .brand-txt .l1{font-family:'Rajdhani'; font-weight:700; font-size:19px; letter-spacing:0.5px; color:var(--text-hi); line-height:1.15;}
+  .brand-txt .l2{font-size:11.5px; color:var(--text-mid); letter-spacing:0.4px; margin-top:1px;}
+  .top-right{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+  .chip{
+    display:flex; align-items:center; gap:7px;
+    padding:7px 13px; border-radius:20px;
+    border:1px solid var(--line); background:var(--bg-2);
+    font-size:12px; color:var(--text-mid); letter-spacing:0.2px;
+  }
+  .chip b{color:var(--text-hi); font-weight:600;}
+  .chip.live{border-color:rgba(47,208,123,0.4); background:rgba(47,208,123,0.07); color:var(--green);}
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 0 3px rgba(47,208,123,0.18);}
+  .dot.pulse{animation:pulse 1.8s infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(47,208,123,0.45);}70%{box-shadow:0 0 0 8px rgba(47,208,123,0);}100%{box-shadow:0 0 0 0 rgba(47,208,123,0);}}
+
+  /* ===== PROJECT STRIP ===== */
+  .proj-strip{
+    display:flex; align-items:flex-end; justify-content:space-between;
+    padding:18px 22px; border-radius:16px; margin-bottom:22px;
+    background:linear-gradient(120deg, rgba(46,78,255,0.14), rgba(90,155,213,0.06) 60%, transparent);
+    border:1px solid var(--line-soft);
+    flex-wrap:wrap; gap:16px;
+  }
+  .proj-strip .eyebrow{font-size:11px; letter-spacing:1.5px; color:var(--cyan); text-transform:uppercase; font-weight:600; margin-bottom:6px;}
+  .proj-strip h1{font-family:'Rajdhani'; font-weight:700; font-size:27px; color:var(--text-hi); letter-spacing:0.3px;}
+  .proj-strip .sub{font-size:13px; color:var(--text-mid); margin-top:4px;}
+  .proj-meta{display:flex; gap:26px; flex-wrap:wrap;}
+  .proj-meta .m{text-align:right;}
+  .proj-meta .m .v{font-family:'JetBrains Mono'; font-size:15px; font-weight:600; color:var(--text-hi);}
+  .proj-meta .m .k{font-size:10.5px; color:var(--text-low); letter-spacing:0.6px; text-transform:uppercase; margin-top:2px;}
+
+  /* ===== KPI ROW ===== */
+  .kpi-row{display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-bottom:22px;}
+  .kpi{
+    background:var(--bg-2); border:1px solid var(--line-soft); border-radius:14px;
+    padding:17px 18px; position:relative; overflow:hidden;
+  }
+  .kpi .k-label{font-size:11px; color:var(--text-mid); letter-spacing:0.4px; text-transform:uppercase; margin-bottom:10px; font-weight:600;}
+  .kpi .k-value{font-family:'Rajdhani'; font-weight:700; font-size:29px; color:var(--text-hi); line-height:1;}
+  .kpi .k-value span{font-size:15px; color:var(--text-mid); font-weight:600;}
+  .kpi .k-sub{font-size:11.5px; margin-top:8px; display:flex; align-items:center; gap:5px;}
+  .up{color:var(--green);} .down{color:var(--red);} .warn{color:var(--amber);}
+  .kpi.flag{border-color:rgba(240,71,92,0.4); background:linear-gradient(160deg, rgba(240,71,92,0.10), var(--bg-2) 60%);}
+
+  /* ===== MAIN GRID ===== */
+  .grid{display:grid; grid-template-columns:1.65fr 1fr; gap:16px; margin-bottom:16px; align-items:stretch;}
+  .card{
+    background:var(--bg-2); border:1px solid var(--line-soft); border-radius:16px;
+    padding:20px 22px;
+  }
+  .card-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;}
+  .card-title{font-family:'Rajdhani'; font-weight:700; font-size:17px; letter-spacing:0.2px; color:var(--text-hi);}
+  .card-title .tag{font-size:10.5px; color:var(--text-low); font-weight:500; letter-spacing:0.3px; margin-left:8px; font-family:'Inter';}
+  .legend{display:flex; gap:16px;}
+  .legend span{font-size:11px; color:var(--text-mid); display:flex; align-items:center; gap:6px;}
+  .sw{width:11px; height:3px; border-radius:2px; display:inline-block;}
+
+  /* S-curve */
+  .scurve-wrap{position:relative;}
+  .scurve-foot{display:flex; justify-content:space-between; margin-top:6px;}
+  .scurve-foot span{font-size:10px; color:var(--text-low); font-family:'JetBrains Mono';}
+  .callout{
+    position:absolute; background:var(--bg-3); border:1px solid rgba(240,71,92,0.5);
+    border-radius:10px; padding:8px 11px; font-size:11px; color:var(--text-hi); width:168px;
+    box-shadow:0 10px 26px -8px rgba(0,0,0,0.6);
+  }
+  .callout .cl-t{color:var(--red); font-weight:700; font-size:10.5px; letter-spacing:0.3px; margin-bottom:3px;}
+
+  /* Right column stack */
+  .right-stack{display:flex; flex-direction:column; gap:16px;}
+
+  /* One-line diagram */
+  .oneline{position:relative; height:210px;}
+  .node{
+    position:absolute; width:78px; text-align:center; transform:translate(-50%,-50%);
+  }
+  .node .box{
+    width:78px; height:44px; border-radius:8px; border:1.5px solid var(--line);
+    background:var(--bg-3); display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono'; font-size:10px; font-weight:600; color:var(--text-hi); line-height:1.15; padding:2px;
+  }
+  .node.ok .box{border-color:rgba(47,208,123,0.55); box-shadow:0 0 14px -4px rgba(47,208,123,0.5);}
+  .node.watch .box{border-color:rgba(245,166,35,0.65); box-shadow:0 0 14px -4px rgba(245,166,35,0.55);}
+  .node .pct{font-size:9.5px; color:var(--text-mid); margin-top:4px;}
+  .node.ok .pct{color:var(--green);} .node.watch .pct{color:var(--amber);}
+
+  /* Alert feed */
+  .alert{
+    display:flex; gap:11px; padding:12px 0; border-bottom:1px solid var(--line-soft);
+  }
+  .alert:last-child{border-bottom:none; padding-bottom:0;}
+  .alert-ic{
+    width:30px; height:30px; border-radius:8px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:14px;
+  }
+  .alert-ic.r{background:rgba(240,71,92,0.14); color:var(--red);}
+  .alert-ic.a{background:rgba(245,166,35,0.14); color:var(--amber);}
+  .alert-ic.c{background:rgba(57,199,240,0.14); color:var(--cyan);}
+  .alert-body .a-t{font-size:12.5px; font-weight:600; color:var(--text-hi); margin-bottom:2px;}
+  .alert-body .a-d{font-size:11.5px; color:var(--text-mid); line-height:1.4;}
+  .alert-body .a-m{font-size:10px; color:var(--text-low); margin-top:4px; font-family:'JetBrains Mono';}
+
+  /* Zone readiness */
+  .zones{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .zone{background:var(--bg-3); border:1px solid var(--line-soft); border-radius:12px; padding:13px 14px;}
+  .zone .z-t{font-size:11.5px; font-weight:600; color:var(--text-hi); margin-bottom:2px;}
+  .zone .z-s{font-size:10px; color:var(--text-low); margin-bottom:10px;}
+  .ring-row{display:flex; align-items:center; gap:10px;}
+  .ring{position:relative; width:46px; height:46px; flex-shrink:0;}
+  .ring svg{transform:rotate(-90deg);}
+  .ring .rv{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono'; font-size:10px; font-weight:600;}
+  .ring-lbl{font-size:10.5px; color:var(--text-mid); line-height:1.4;}
+  .ring-lbl b{color:var(--text-hi); font-weight:600;}
+
+  /* Critical path ribbon */
+  .cp-ribbon{display:flex; align-items:center; gap:0; margin-top:4px; overflow-x:auto; padding-bottom:2px;}
+  .cp-step{flex:1; min-width:150px; position:relative; padding:12px 16px 12px 18px; background:var(--bg-3); border:1px solid var(--line-soft);}
+  .cp-step:first-child{border-radius:10px 0 0 10px;}
+  .cp-step:last-child{border-radius:0 10px 10px 0;}
+  .cp-step:not(:last-child){border-right:none;}
+  .cp-step::after{
+    content:''; position:absolute; right:-11px; top:50%; transform:translateY(-50%) rotate(45deg);
+    width:16px; height:16px; background:var(--bg-3); border-right:1px solid var(--line-soft); border-top:1px solid var(--line-soft);
+    z-index:2;
+  }
+  .cp-step:last-child::after{display:none;}
+  .cp-step .cs-n{font-size:9.5px; color:var(--red); font-family:'JetBrains Mono'; letter-spacing:0.5px; margin-bottom:3px;}
+  .cp-step .cs-t{font-size:12px; font-weight:600; color:var(--text-hi); line-height:1.3;}
+  .cp-step.done{background:rgba(47,208,123,0.06); border-color:rgba(47,208,123,0.3);}
+  .cp-step.done .cs-n{color:var(--green);}
+  .cp-step.active{background:rgba(245,166,35,0.08); border-color:rgba(245,166,35,0.4);}
+  .cp-step.active .cs-n{color:var(--amber);}
+
+  /* Before/After */
+  .ba-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;}
+  .ba-card{border-radius:16px; padding:20px 22px; border:1px solid var(--line-soft);}
+  .ba-before{background:linear-gradient(160deg, rgba(240,71,92,0.07), var(--bg-2) 55%);}
+  .ba-after{background:linear-gradient(160deg, rgba(47,208,123,0.08), var(--bg-2) 55%);}
+  .ba-tag{display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:0.6px; text-transform:uppercase; padding:4px 10px; border-radius:6px; margin-bottom:12px;}
+  .ba-before .ba-tag{background:rgba(240,71,92,0.16); color:var(--red);}
+  .ba-after .ba-tag{background:rgba(47,208,123,0.16); color:var(--green);}
+  .ba-h{font-family:'Rajdhani'; font-weight:700; font-size:17px; margin-bottom:12px; color:var(--text-hi);}
+  .raw-log{
+    background:#05070C; border:1px solid #1C2540; border-radius:10px; padding:12px 13px;
+    font-family:'JetBrains Mono'; font-size:10.5px; color:#7C8AAE; line-height:1.75; overflow:hidden;
+    max-height:150px;
+  }
+  .raw-log .row{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .raw-log .row b{color:#A9B6D6;}
+  .clean-list{display:flex; flex-direction:column; gap:9px;}
+  .clean-item{display:flex; align-items:center; gap:10px; background:var(--bg-3); border-radius:9px; padding:9px 12px;}
+  .clean-item .ci-dot{width:8px; height:8px; border-radius:50%; background:var(--green); flex-shrink:0;}
+  .clean-item .ci-t{font-size:12px; color:var(--text-hi); font-weight:500;}
+  .clean-item .ci-v{margin-left:auto; font-family:'JetBrains Mono'; font-size:11.5px; color:var(--green); font-weight:600;}
+
+  /* Footer CTA */
+  .cta{
+    margin-top:24px; border-radius:18px; padding:28px 32px;
+    background:linear-gradient(115deg, #131C63, #0C1140 55%, #050818);
+    border:1px solid var(--line-soft);
+    display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  .cta h2{font-family:'Rajdhani'; font-weight:700; font-size:23px; color:var(--text-hi); margin-bottom:6px;}
+  .cta p{font-size:13px; color:var(--text-mid); max-width:520px; line-height:1.5;}
+  .cta-steps{display:flex; gap:10px; flex-wrap:wrap;}
+  .step-chip{
+    display:flex; align-items:center; gap:8px; padding:9px 14px; border-radius:10px;
+    background:var(--bg-2); border:1px solid var(--line); font-size:12px; color:var(--text-hi); white-space:nowrap;
+  }
+  .step-chip .n{
+    width:18px; height:18px; border-radius:5px; background:var(--brand); color:#FFFFFF;
+    font-family:'JetBrains Mono'; font-weight:700; font-size:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+
+  .foot-note{text-align:center; font-size:10.5px; color:var(--text-low); margin-top:22px; letter-spacing:0.2px;}
+
+  @media(max-width:1150px){
+    .kpi-row{grid-template-columns:repeat(2,1fr);}
+    .grid{grid-template-columns:1fr;}
+    .ba-row{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">M</div>
+      <div class="brand-txt">
+        <div class="l1">MADKOUR&nbsp; AI</div>
+        <div class="l2">AUTONOMOUS PROJECT INTELLIGENCE PLATFORM</div>
+      </div>
+    </div>
+    <div class="top-right">
+      <div class="chip live"><span class="dot pulse"></span> LIVE MONITORING ACTIVE</div>
+      <div class="chip">🛰 3 sources syncing <b>&nbsp;Primavera · Daily Reports · Site Capture</b></div>
+      <div class="chip mono">13 Apr 2026 · 14:22</div>
+    </div>
+  </div>
+
+  <!-- PROJECT STRIP -->
+  <div class="proj-strip">
+    <div>
+      <div class="eyebrow">Project Under AI Monitoring</div>
+      <h1>PS‑03 &nbsp;·&nbsp; 220 / 66 / 11 kV GIS Substation</h1>
+      <div class="sub">New Administrative Capital, Egypt &nbsp;—&nbsp; Owner: ACUD &nbsp;·&nbsp; Consultant: EPS &nbsp;·&nbsp; Contractor: Madkour Holding</div>
+    </div>
+    <div class="proj-meta">
+      <div class="m"><div class="v mono">670.3M EGP</div><div class="k">Contract Value</div></div>
+      <div class="m"><div class="v mono">8 Mar 26 → 8 Jun 27</div><div class="k">Baseline Duration · 15 Months</div></div>
+      <div class="m"><div class="v mono">2,231</div><div class="k">Activities Tracked</div></div>
+    </div>
+  </div>
+
+  <!-- KPI ROW -->
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="k-label">Planned Progress to Date</div>
+      <div class="k-value">12.6<span>%</span></div>
+      <div class="k-sub" style="color:var(--text-mid)">Baseline S‑Curve, as of 13 Apr</div>
+    </div>
+    <div class="kpi flag">
+      <div class="k-label">AI‑Verified Actual</div>
+      <div class="k-value">9.1<span>%</span></div>
+      <div class="k-sub down">▼ 3.5 pts behind baseline — flagged</div>
+    </div>
+    <div class="kpi">
+      <div class="k-label">Critical Path Float</div>
+      <div class="k-value">0<span>days</span></div>
+      <div class="k-sub warn">⚠ Zero float · GIS 220 chain</div>
+    </div>
+    <div class="kpi">
+      <div class="k-label">Open AI Risk Alerts</div>
+      <div class="k-value">4</div>
+      <div class="k-sub" style="color:var(--text-mid)">1 critical · 2 watch · 1 info</div>
+    </div>
+    <div class="kpi">
+      <div class="k-label">Site Capture Coverage</div>
+      <div class="k-value">96<span>%</span></div>
+      <div class="k-sub up">▲ Spider cam + robot patrol, daily</div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="grid">
+    <!-- S CURVE CARD -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Planned vs. AI‑Verified Progress <span class="tag">Overall S‑Curve · Mar 2026 – Jun 2027</span></div>
+        <div class="legend">
+          <span><i class="sw" style="background:var(--cyan)"></i>Planned (Baseline)</span>
+          <span><i class="sw" style="background:var(--amber)"></i>AI‑Verified Actual</span>
+        </div>
+      </div>
+      <div class="scurve-wrap">
+        <svg viewBox="0 0 760 300" style="width:100%; height:auto; display:block;">
+          <!-- gridlines -->
+          <g stroke="#1A2540" stroke-width="1">
+            <line x1="40" y1="20" x2="40" y2="250"/>
+            <line x1="40" y1="250" x2="740" y2="250"/>
+            <line x1="40" y1="188" x2="740" y2="188" stroke-dasharray="2,5"/>
+            <line x1="40" y1="126" x2="740" y2="126" stroke-dasharray="2,5"/>
+            <line x1="40" y1="64" x2="740" y2="64" stroke-dasharray="2,5"/>
+          </g>
+          <g font-family="JetBrains Mono" font-size="9" fill="#5D6C90">
+            <text x="14" y="253">0%</text>
+            <text x="8" y="191">33%</text>
+            <text x="8" y="129">66%</text>
+            <text x="4" y="67">100%</text>
+          </g>
+          <!-- planned line: cum values 5,10,16,22,29,36,44,52,66,80,86,90,96,99,99.9,100 across 16 pts -->
+          <polyline points="40,238 86,225 133,207 179,189 226,167 272,146 319,117 365,91 412,58 458,25 505,17 551,12 598,6 644,3 690,2 736,2"
+            fill="none" stroke="var(--cyan)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- actual line to-date (illustrative, stops at "today") 2,4,6.5,9.1 -->
+          <polyline points="40,238 86,225 133,207 179,189 190,183"
+            fill="none" stroke="var(--amber)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="190" cy="183" r="5" fill="var(--amber)"/>
+          <!-- today marker -->
+          <line x1="190" y1="20" x2="190" y2="250" stroke="#EAF0FB" stroke-width="1" stroke-dasharray="3,4" opacity="0.35"/>
+          <text x="196" y="30" font-family="JetBrains Mono" font-size="9.5" fill="#EAF0FB" opacity="0.7">TODAY</text>
+        </svg>
+        <div class="callout" style="top:118px; left:210px;">
+          <div class="cl-t">⚠ AI DELAY SIGNAL</div>
+          Computer‑vision progress verification trails Primavera baseline by 3.5 pts — procurement lead time on 220kV GIS flagged as root cause.
+        </div>
+      </div>
+      <div class="scurve-foot">
+        <span>MAR 26</span><span>MAY 26</span><span>JUL 26</span><span>SEP 26</span><span>NOV 26</span><span>JAN 27</span><span>MAR 27</span><span>MAY 27</span><span>JUN 27</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: ONE LINE DIAGRAM -->
+    <div class="right-stack">
+      <div class="card" style="flex:1;">
+        <div class="card-head">
+          <div class="card-title">Substation Status Map <span class="tag">AI Site Capture</span></div>
+        </div>
+        <div class="oneline">
+          <svg viewBox="0 0 300 210" style="position:absolute; inset:0; width:100%; height:100%;">
+            <g stroke="#2A3760" stroke-width="1.5" fill="none">
+              <line x1="150" y1="30" x2="150" y2="55"/>
+              <line x1="150" y1="55" x2="60" y2="55"/>
+              <line x1="150" y1="55" x2="240" y2="55"/>
+              <line x1="60" y1="55" x2="60" y2="95"/>
+              <line x1="240" y1="55" x2="240" y2="95"/>
+              <line x1="60" y1="95" x2="60" y2="120"/>
+              <line x1="240" y1="95" x2="240" y2="120"/>
+              <line x1="150" y1="120" x2="150" y2="150"/>
+              <line x1="60" y1="120" x2="240" y2="120"/>
+              <line x1="60" y1="150" x2="60" y2="180"/>
+              <line x1="240" y1="150" x2="240" y2="180"/>
+              <line x1="60" y1="150" x2="240" y2="150"/>
+            </g>
+          </svg>
+          <div class="node ok" style="left:50%; top:8%;"><div class="box">GRID<br>INCOMER</div></div>
+          <div class="node watch" style="left:20%; top:28%;"><div class="box">GIS<br>220 kV</div><div class="pct">64% cplt</div></div>
+          <div class="node ok" style="left:80%; top:28%;"><div class="box">GIS<br>66 kV</div><div class="pct">71% cplt</div></div>
+          <div class="node watch" style="left:20%; top:58%;"><div class="box">TRF<br>175 MVA</div><div class="pct">55% cplt</div></div>
+          <div class="node ok" style="left:80%; top:58%;"><div class="box">TRF<br>40 MVA</div><div class="pct">62% cplt</div></div>
+          <div class="node ok" style="left:50%; top:82%;"><div class="box">CONTROL<br>BUILDING</div><div class="pct">78% cplt</div></div>
+        </div>
+        <div class="legend" style="margin-top:6px;">
+          <span><i class="sw" style="background:var(--green); height:8px; width:8px; border-radius:50%;"></i>On track</span>
+          <span><i class="sw" style="background:var(--amber); height:8px; width:8px; border-radius:50%;"></i>Watch — AI flagged</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECOND ROW: CRITICAL PATH + ALERTS/ZONES -->
+  <div class="grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">AI‑Tracked Critical Path <span class="tag">Zero float · continuously re‑validated</span></div>
+      </div>
+      <div class="cp-ribbon">
+        <div class="cp-step done"><div class="cs-n">01 · COMPLETE</div><div class="cs-t">Civil &amp; Architectural Drawings</div></div>
+        <div class="cp-step active"><div class="cs-n">02 · IN PROGRESS</div><div class="cs-t">Execution Phase — GIS 220 Building</div></div>
+        <div class="cp-step"><div class="cs-n">03 · UPCOMING</div><div class="cs-t">PO &amp; Delivery — Transformer 40 MVA</div></div>
+        <div class="cp-step"><div class="cs-n">04 · UPCOMING</div><div class="cs-t">Installing &amp; Testing — GIS 220</div></div>
+        <div class="cp-step"><div class="cs-n">05 · MILESTONE</div><div class="cs-t">Substation Energization</div></div>
+      </div>
+      <div style="margin-top:20px;">
+        <div class="card-title" style="font-size:14px; margin-bottom:10px;">Zone Readiness for Erection</div>
+        <div class="zones">
+          <div class="zone">
+            <div class="z-t">Zone 01 — 220 kV GIS &amp; 175 MVA Transformer</div>
+            <div class="z-s">Ready for erection target · Month 7</div>
+            <div class="ring-row">
+              <div class="ring">
+                <svg width="46" height="46"><circle cx="23" cy="23" r="19" fill="none" stroke="#1A2540" stroke-width="5"/><circle cx="23" cy="23" r="19" fill="none" stroke="#F5A623" stroke-width="5" stroke-dasharray="119.4" stroke-dashoffset="55" stroke-linecap="round"/></svg>
+                <div class="rv" style="color:var(--amber)">54%</div>
+              </div>
+              <div class="ring-lbl">Civil substructure <b>on track</b><br>GIS erection window <b>watch</b></div>
+            </div>
+          </div>
+          <div class="zone">
+            <div class="z-t">Zone 02 — Control Building, 66 kV GIS &amp; 40 MVA Transformer</div>
+            <div class="z-s">Ready for erection target · Month 7.5</div>
+            <div class="ring-row">
+              <div class="ring">
+                <svg width="46" height="46"><circle cx="23" cy="23" r="19" fill="none" stroke="#1A2540" stroke-width="5"/><circle cx="23" cy="23" r="19" fill="none" stroke="#2FD07B" stroke-width="5" stroke-dasharray="119.4" stroke-dashoffset="34" stroke-linecap="round"/></svg>
+                <div class="rv" style="color:var(--green)">71%</div>
+              </div>
+              <div class="ring-lbl">Control Bldg superstructure <b>ahead</b><br>66 kV GIS civils <b>on track</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">AI Insight Feed <span class="tag">Auto‑generated</span></div>
+      </div>
+      <div class="alert">
+        <div class="alert-ic r">⛔</div>
+        <div class="alert-body">
+          <div class="a-t">Zero‑float chain at risk</div>
+          <div class="a-d">220 kV GIS manufacturing spans 149 days with no schedule buffer. A 2‑week supplier slip pushes energization past 8 Jun 2027.</div>
+          <div class="a-m">DETECTED 06:12 · SOURCE: PRIMAVERA + PROCUREMENT SYNC</div>
+        </div>
+      </div>
+      <div class="alert">
+        <div class="alert-ic a">◐</div>
+        <div class="alert-body">
+          <div class="a-t">Progress verification gap</div>
+          <div class="a-d">Site capture shows GIS 220 structural works at 64% vs. 71% self‑reported by contractor daily log — 7 pt discrepancy.</div>
+          <div class="a-m">DETECTED 05:47 · SOURCE: COMPUTER VISION</div>
+        </div>
+      </div>
+      <div class="alert">
+        <div class="alert-ic a">◐</div>
+        <div class="alert-body">
+          <div class="a-t">Manpower below plan</div>
+          <div class="a-d">Boundary wall &amp; trench crews at 62% of required headcount for 3 consecutive days — masonry package trending late.</div>
+          <div class="a-m">DETECTED 13 APR · SOURCE: DAILY REPORT NLP PARSE</div>
+        </div>
+      </div>
+      <div class="alert">
+        <div class="alert-ic c">ℹ</div>
+        <div class="alert-body">
+          <div class="a-t">Recommendation</div>
+          <div class="a-d">Shift 4 masonry crews from Zone 02 (ahead of plan) to Zone 01 boundary wall to protect the 220 kV critical chain.</div>
+          <div class="a-m">AI COPILOT · CONFIDENCE 88%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEFORE / AFTER -->
+  <div class="ba-row">
+    <div class="ba-card ba-before">
+      <span class="ba-tag">Today — Manual Reporting</span>
+      <div class="ba-h">A daily report engineers must hand‑type and reconcile</div>
+      <div class="raw-log">
+        <div class="row"><b>1 |</b> PLASTER WORKS FOR BOUNDARY WALL | Plan 0 | Actual 21 | 8 PLASTER+6 LABOR</div>
+        <div class="row"><b>2 |</b> SURFACE PREPARATIONS | Cable Trenches | LABOR | —</div>
+        <div class="row"><b>3 |</b> Welder | Outdoor Foundation | 2 Welder | —</div>
+        <div class="row"><b>4 |</b> MASONARY WORKS Side Walks &amp; Roads | 0.5 | 0 | 2 BRICK+2 LABOR</div>
+        <div class="row"><b>6 |</b> PAINTERS FOR 220 GIS | 0.9 | 4 painters | —</div>
+        <div class="row"><b>7 |</b> Installing the wire fence | — | wire mesh fence | —</div>
+        <div class="row"><b>9 |</b> SHUTTERING R.C | 10 | Manholes | —</div>
+        <div class="row"><b>12 |</b> SITE ARRANGEMENT &amp; BACKFILLING | 7 | 10 LABOR | 2 LOADER</div>
+        <div class="row" style="color:#3E4A70;">…free‑text, inconsistent units, no verification, reconciled next morning</div>
+      </div>
+    </div>
+    <div class="ba-card ba-after">
+      <span class="ba-tag">With Madkour AI</span>
+      <div class="ba-h">The same site activity, structured &amp; verified automatically</div>
+      <div class="clean-list">
+        <div class="clean-item"><span class="ci-dot"></span><span class="ci-t">Boundary Wall — Plaster Works</span><span class="ci-v">21 / 21 m² ✓</span></div>
+        <div class="clean-item"><span class="ci-dot"></span><span class="ci-t">Cable Trenches — Surface Prep</span><span class="ci-v">Verified · CV</span></div>
+        <div class="clean-item"><span class="ci-dot"></span><span class="ci-t">220 GIS — Painting Works</span><span class="ci-v">4 crews · on plan</span></div>
+        <div class="clean-item"><span class="ci-dot"></span><span class="ci-t">Boundary Wall — Wire Mesh Fence</span><span class="ci-v">Progressing</span></div>
+        <div class="clean-item"><span class="ci-dot" style="background:var(--amber)"></span><span class="ci-t">Masonry — Side Walks 220 GIS</span><span class="ci-v" style="color:var(--amber)">0 / 0.5 ⚠</span></div>
+        <div class="clean-item"><span class="ci-dot"></span><span class="ci-t">Site Backfilling — All Areas</span><span class="ci-v">10 / 7 crews ✓</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <div>
+      <h2>Let's put this on PS‑03 first.</h2>
+      <p>A 6‑week pilot on the substation you're already building — smart cameras deployed on Zone 01 &amp; 02, Primavera synced live, executive dashboard on day one. No new hires, no workflow disruption.</p>
+    </div>
+    <div class="cta-steps">
+      <div class="step-chip"><span class="n">1</span> Deploy site capture</div>
+      <div class="step-chip"><span class="n">2</span> Sync Primavera + reports</div>
+      <div class="step-chip"><span class="n">3</span> Launch AI dashboard</div>
+      <div class="step-chip"><span class="n">4</span> Validate against site reality</div>
+    </div>
+  </div>
+
+  <div class="foot-note">MADKOUR AI · Autonomous Project Intelligence Platform — Illustrative product walkthrough built on the PS‑03 220/66/11kV Substation baseline schedule. Progress figures marked "AI‑Verified" are simulated for demonstration.</div>
+
+</body>
+</html>
