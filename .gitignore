@@ -8,6 +8,8 @@ dist
 dist-ssr
 
 # local env files
+.env
+.env.local
 .env.*.local
 
 # logs
@@ -27,4 +29,3 @@ Thumbs.db
 
 # vercel
 .vercel
-config.bat
